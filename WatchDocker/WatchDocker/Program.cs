@@ -61,7 +61,7 @@ namespace WatchDocker
 				Console.WriteLine("Some of input arguments were not present or invalid. See --help section.\n");
 			}
 
-			Console.WriteLine("Usage:\n\ndocker run --name watchdocker -d watchdocker -s=[shell] -u=[username] -p=[password or token] -r=[registry] -i=[image name] -c=[container name] -e=[port:port] -t=[interval in seconds]\n");
+			Console.WriteLine("Usage:\n\ndocker run --name watchdocker -d -v /var/run/docker.sock:/var/run/docker.sock tgrymnak/watchdocker -s=[shell] -u=[username] -p=[password or token] -r=[registry] -i=[image name] -c=[container name] -e=[port:port] -t=[interval in seconds]\n");
 			var options = new List<(string Command, bool Required, string Description)>
 			{
 				("-s, --shell", false, "Shell to be used to execute commands (automatically detected shell will be used if option isn't specified)"),
