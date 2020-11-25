@@ -3,7 +3,7 @@ Keeps an eye on specific docker images and updates appropriate containers if new
 
 ## Usages
 ```
-$ docker run --name watchdocker -d \ 
+docker run --name watchdocker -d \ 
     -v /var/run/docker.sock:/var/run/docker.sock \
     tgrymnak/watchdocker \
     -s=[shell] \
