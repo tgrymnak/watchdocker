@@ -16,7 +16,7 @@ jobs:
       id: docker_meta
       uses: crazy-max/ghaction-docker-meta@v1
       with:
-        images: ${{ env.DOCKER_IMAGE }}
+        images: name/app
     - name: Build and push to Docker Hub
       id: docker_build
       uses: docker/build-push-action@v1
