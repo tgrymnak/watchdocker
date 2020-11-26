@@ -11,6 +11,16 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - tag-match: '\d{1,3}.\d{1,3}.\d{1,3}'
+            tag-match-group: '0'
+          - tag-match: '\d{1,3}.\d{1,3}'
+            tag-match-group: '0'
+          - tag-match: 'v(.*)'
+            tag-match-group: '1'
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -21,7 +31,8 @@ jobs:
       uses: crazy-max/ghaction-docker-meta@v1
       with:
         images: tgrymnak/watchdocker
-        tag-match: '\d{1,3}.\d{1,3}.\d{1,3}'
+        tag-match: ${{ matrix.tag-match }}
+        tag-match-group: ${{ matrix.tag-match-group }}
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
     - name: Login to Docker Hub
@@ -35,3 +46,4 @@ jobs:
       with:
         push: true
         tags: ${{ steps.docker_meta.outputs.tags }}
+        labels: ${{ steps.docker_meta.outputs.labels }}
