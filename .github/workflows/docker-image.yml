@@ -21,6 +21,7 @@ jobs:
       uses: crazy-max/ghaction-docker-meta@v1
       with:
         images: tgrymnak/watchdocker
+        tag-edge: true
         tag-match-latest: false
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
@@ -33,4 +34,5 @@ jobs:
       id: docker_build
       uses: docker/build-push-action@v2
       with:
+        push: true
         tags: ${{ steps.docker_meta.outputs.tags }}
