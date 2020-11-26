@@ -23,7 +23,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
       with:
-        fetch-depth: 0
+        fetch-depth: 1
     - name: Docker metadata
       id: docker_meta
       uses: crazy-max/ghaction-docker-meta@v1
