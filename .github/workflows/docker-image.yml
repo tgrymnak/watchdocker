@@ -22,8 +22,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-      with:
-        fetch-depth: 1
+    - run: |
+        git fetch --prune --unshallow
     - name: Docker metadata
       id: docker_meta
       uses: crazy-max/ghaction-docker-meta@v1
