@@ -22,5 +22,5 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: tgrymnak/watchdocker
-        tags: ${{VERSION_TAG}}
+        tags: ${{ github.tag }}
         tag_with_ref: true
