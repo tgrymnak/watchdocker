@@ -3,6 +3,8 @@ name: Docker Image CI
 on:
   push:
     branches: [ master ]
+    tags:
+      - 'v*.*.*'
   pull_request:
     branches: [ master ]
   
@@ -20,6 +22,8 @@ jobs:
       with:
         images: tgrymnak/watchdocker
         tag-match-latest: false
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
     - name: Login to Docker Hub
       uses: docker/login-action@v1 
       with:
