@@ -33,7 +33,7 @@ jobs:
     - name: Get image version
       id: image_version
       run: |
-        echo $GIT_TAG_NAME
+        echo ${{ GIT_TAG_NAME }}
     #      echo ::set-output name=IMAGE_VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
     #- name: Docker metadata
     #  id: docker_meta
@@ -56,4 +56,4 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: ${{ steps.tag_name.outputs.tag }}
+        tags: ${{ GIT_TAG_NAME }}
