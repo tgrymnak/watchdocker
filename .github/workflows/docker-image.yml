@@ -34,11 +34,12 @@ jobs:
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
           # Use Docker `latest` tag convention
           [ "$VERSION" == "master" ] && VERSION=latest
-          echo VERSION=$VERSION
+          echo ::set-output name=IMAGE_VERSION::$VERSION
+          echo ${{ IMAGE_VERSION }}
     - name: Get image version
       id: image_version
       run: |
-        echo ${{ steps.tag.outputs.result }}
+        echo ${{ steps.tag.outputs.IMAGE_VERSION }}
     #      echo ::set-output name=IMAGE_VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
     #- name: Docker metadata
     #  id: docker_meta
@@ -61,4 +62,4 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: $VERSION
+        tags: ${{ steps.tag.outputs.IMAGE_VERSION }}
