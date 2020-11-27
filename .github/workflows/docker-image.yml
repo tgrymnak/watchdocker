@@ -20,6 +20,11 @@ jobs:
     #      - tag-match: '\d{1,3}.\d{1,3}.\d{1,3}'
     #        tag-match-group: '1'
     steps:
+    - name: Checkout
+      id: checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     - uses: olegtarasov/get-tag@v2
       id: tag_name
       with:
@@ -28,7 +33,7 @@ jobs:
     - name: Get image version
       id: image_version
       run: |
-        echo ${{ steps.tag_name.outputs.tag }}
+        echo $GIT_TAG_NAME
     #      echo ::set-output name=IMAGE_VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
     #- name: Docker metadata
     #  id: docker_meta
