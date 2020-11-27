@@ -58,4 +58,4 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: ${{ GIT_TAG_NAME }}
+        tags: ${{ steps.tag.outputs.result }}
