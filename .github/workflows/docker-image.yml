@@ -21,17 +21,18 @@ jobs:
     #        tag-match-group: '1'
     steps:
     - name: Checkout
-      id: checkout
       uses: actions/checkout@v2
+    - name: Docker metadata
+      id: docker_meta
+      uses: crazy-max/ghaction-docker-meta@v1
       with:
-        fetch-depth: 0
+        images: tgrymnak/watchdocker
+
     - name: Extract tag name
       id: tag
       run: |
           # Strip git ref prefix from version
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          # Strip "v" prefix from tag name
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          VERSION=${{ steps.docker_meta.outputs.tags }}
           # Use Docker `latest` tag convention
           [ "$VERSION" == "master" ] && VERSION=latest
           echo ::set-output name=IMAGE_VERSION::$VERSION
@@ -39,14 +40,7 @@ jobs:
       id: image_version
       run: |
         echo ${{ steps.tag.outputs.IMAGE_VERSION }}
-    #      echo ::set-output name=IMAGE_VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
-    #- name: Docker metadata
-    #  id: docker_meta
-    #  uses: crazy-max/ghaction-docker-meta@v1
-    #  with:
-    #    images: tgrymnak/watchdocker
-    #    tag-match: ${{ matrix.tag-match }}
-    #    tag-match-group: ${{ matrix.tag-match-group }}
+
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
     - name: Set up Docker Buildx
