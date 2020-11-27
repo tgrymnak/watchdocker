@@ -20,9 +20,10 @@ jobs:
     #      - tag-match: '\d{1,3}.\d{1,3}.\d{1,3}'
     #        tag-match-group: '1'
     steps:
-    - uses: actions/checkout@v2
     - name: Set image version
-      run: echo "IMAGE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      id: image_version
+      run: |
+          echo ::set-output name=IMAGE_VERSION::${GITHUB_REF#refs/*/}
     #- name: Docker metadata
     #  id: docker_meta
     #  uses: crazy-max/ghaction-docker-meta@v1
@@ -44,4 +45,4 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         #push: true
-        tags: ${{ env.IMAGE_VERSION }}
+        tags: ${{ steps.image_version.IMAGE_VERSION }}
