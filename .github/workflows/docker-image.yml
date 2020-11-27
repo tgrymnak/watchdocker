@@ -35,7 +35,6 @@ jobs:
           # Use Docker `latest` tag convention
           [ "$VERSION" == "master" ] && VERSION=latest
           echo ::set-output name=IMAGE_VERSION::$VERSION
-          echo ${{ IMAGE_VERSION }}
     - name: Get image version
       id: image_version
       run: |
