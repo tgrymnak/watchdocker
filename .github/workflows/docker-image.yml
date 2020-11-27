@@ -21,13 +21,15 @@ jobs:
     #        tag-match-group: '1'
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      id: checkout
+      uses: actions/checkout@v2.2.0
       with:
         fetch-depth: 0
-    - name: Set image version
+    - name: Get image version
       id: image_version
       run: |
-          echo ::set-output name=IMAGE_VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+        echo ${{ steps.checkout.outputs.tag }}
+    #      echo ::set-output name=IMAGE_VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
     #- name: Docker metadata
     #  id: docker_meta
     #  uses: crazy-max/ghaction-docker-meta@v1
@@ -49,4 +51,4 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: ${{ steps.image_version.IMAGE_VERSION }}
+        tags: ${{ steps.checkout.outputs.tag }}
